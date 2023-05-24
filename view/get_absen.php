@@ -27,7 +27,7 @@ if ($query->num_rows!==0) {
               $type = "in";
               $status = "Absen masuk";
               $time = $get_absen['jam_msk'];
-            }elseif ($get_absen['st_jam_klr']==="Menunggu") {
+            } elseif ($get_absen['st_jam_klr']==="Menunggu") {
               $type = "out";
               $status = "Absen keluar";
               $time = $get_absen['jam_klr'];

@@ -6,7 +6,7 @@
 		$name = $get_user['name_user'];
 		$id_user = $get_user['id_user'];
 
-		echo "<h1 class='page-header'>Welcome, $name</h1>";
+		echo "<h1 class='page-header'>Selamat datang, $name</h1>";
 		
 			if ($conn->query("SELECT*FROM data_absen WHERE id_user='$id_user'")->num_rows!==0) {
 				$no=0;
@@ -30,6 +30,8 @@
 			                <th>Status</th>
 			                <th>Jam Keluar</th>
 			                <th>Status</th>
+							<th>Absen Lainnya</th>
+							<th>Status</th>
 			               </tr>
 			            </thead>
 			            <tbody>";
@@ -45,6 +47,8 @@
 			             }
 			            $st_in = "$get_absen[st_jam_msk]";
 			            $st_out = "$get_absen[st_jam_klr]";
+						$ab_lain = "$get_absen[absen_lainnya]";
+						$st_ab_lain = "$get_absen[st_ab_lain]";
 			            echo "<tr>
 			                <td>$no</td>
 			                <td>$date</td>
@@ -52,6 +56,8 @@
 			                <td>$st_in</td>
 			                <td>$time_out</td>
 			                <td>$st_out</td>
+							<td>$ab_lain</td>
+							<td>$st_ab_lain</td>
 			              </tr>";
 			          }
 			          echo "</table></div>";

@@ -39,9 +39,9 @@
     </div>
   </div>
   <div class="form-group">
-    <label class="control-label col-sm-2" for="sekolah">Nama Sekolah:</label>
+    <label class="control-label col-sm-2" for="sekolah">Nama Jurusan:</label>
     <div class="col-sm-10">
-      <input type="text" class="form-control" name="sklh" placeholder="Masukan Nama Sekolah" required>
+      <input type="text" class="form-control" name="sklh" placeholder="Masukan Nama Jurusan" required>
     </div>
   </div>
   <div class="form-group">

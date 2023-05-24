@@ -15,7 +15,7 @@ if (!isset($_SESSION['pb'])) {
   <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
   <meta name="description" content="">
   <meta name="author" content="">
-  <link rel="icon" href="http://getbootstrap.com/favicon.ico">
+  <link rel="icon" href="./lib/img/logo.png">
 
   <title>Tambah Admin</title>
 

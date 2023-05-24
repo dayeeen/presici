@@ -1,4 +1,4 @@
-<h3 class='page-header'>Catatan Kegiatan Siswa SMAN 1 Cibaduyut</h3>
+<h3 class='page-header'>Catatan Absensi Siswa SMAN 1 Cibaduyut</h3>
 <div class='table-responsive'>
 	<?php
 	if (isset($_GET['id_siswa'])) {
@@ -17,7 +17,7 @@
 							<th>No</th>
 							<th>Nama Siswa</th>
 							<th>Jurusan</th>
-							<th>Aksi</th>
+							<th>Keterangan</th>
 						</tr>
 					</thead>
 					<tbody>";

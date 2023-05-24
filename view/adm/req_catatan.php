@@ -1,4 +1,4 @@
-<h3 class="page-header">Konfirmasi Catatan Kegiatan Siswa</h3>
+<h3 class="page-header">Konfirmasi Catatan Absensi Siswa</h3>
 <?php
   $sql = "SELECT*FROM catatan NATURAL LEFT JOIN bulan NATURAL JOIN hari NATURAL JOIN tanggal NATURAL JOIN detail_user WHERE status_cat='Menunggu'";
   $query = $conn->query($sql);
@@ -21,7 +21,7 @@
                       <th>No</th>
                       <th>Nama Siswa</th>
                       <th>Hari, Tanggal</th>
-                      <th width='40%'>Kegiatan</th>
+                      <th width='40%'>Keterangan</th>
                       <th>Aksi</th>
                      </tr>
                   </thead>

@@ -77,7 +77,163 @@ if (isset($_POST['login'])) {
 			header("location:../absen&ab=2");
 		}
 
-	} else {
+	} //Absen sakit
+	// Pada absen ini, jam masuk dan pulang tidak diupdate
+	// hanya absen lainnya yang diisi jadi sakit dan statusnya diupdate
+	elseif ($_GET['absen'] == 2) {
+		$id_user = mysqli_real_escape_string($conn, $_SESSION['id']);
+		$id_bln = date("m");
+		$day_tgl = date("d");
+		$day = date("N");
+		$hour = date("H.i") . " WIB";
+		$status = "Menunggu";
+		$absen_lainnya = "Sakit"; // Ganti dengan nilai yang sesuai (Sakit, Izin, atau Alpa)
+
+		$sql = "INSERT INTO data_absen (
+					id_user,
+					id_bln,
+					id_hri,
+					id_tgl,
+					jam_msk,
+					st_jam_msk,
+					jam_klr,
+					st_jam_klr,
+					absen_lainnya) VALUES (
+					?,
+					?,
+					?,
+					?,
+					?,
+					'-',
+					'$hour',
+					'-',
+					?)";
+
+		if ($statement = $conn->prepare($sql)) {
+			$statement->bind_param("iiiiss", $_SESSION['id'], $id_bln, $day, $day_tgl, $hour, $absen_lainnya);
+
+			if ($statement->execute()) {
+				// Absen sukses
+				$conn->close();
+				header("location:../absen&ab=1");
+			} else {
+				header("location:../absen&ab=2");
+			}
+		} else {
+			header("location:../absen&ab=2");
+		}
+	} //Absen izin
+	elseif ($_GET['absen'] == 3) {
+		$id_user = mysqli_real_escape_string($conn, $_SESSION['id']);
+		$id_bln = date("m");
+		$day_tgl = date("d");
+		$day = date("N");
+		$hour = date("H.i") . " WIB";
+		$status = "Menunggu";
+		$absen_lainnya = "Izin"; // Ganti dengan nilai yang sesuai (Sakit, Izin, atau Alpa)
+
+		$sql = "INSERT INTO data_absen (
+					id_user,
+					id_bln,
+					id_hri,
+					id_tgl,
+					jam_msk,
+					st_jam_msk,
+					jam_klr,
+					st_jam_klr,
+					absen_lainnya) VALUES (
+					?,
+					?,
+					?,
+					?,
+					?,
+					'Dikonfirmasi',
+					'$hour',
+					'Dikonfirmasi',
+					?)";
+
+		if ($statement = $conn->prepare($sql)) {
+			$statement->bind_param("iiiiss", $_SESSION['id'], $id_bln, $day, $day_tgl, $hour, $absen_lainnya);
+
+			if ($statement->execute()) {
+				// Absen sukses
+				$conn->close();
+				header("location:../absen&ab=1");
+			} else {
+				header("location:../absen&ab=2");
+			}
+		} else {
+			header("location:../absen&ab=2");
+		}
+	} //Absen alpa
+	elseif ($_GET['absen'] == 4) {
+		$id_user = mysqli_real_escape_string($conn, $_SESSION['id']);
+		$id_bln = date("m");
+		$day_tgl = date("d");
+		$day = date("N");
+		$hour = date("H.i") . " WIB";
+		$absen_lainnya = "Alpa"; // Ganti dengan nilai yang sesuai (Sakit, Izin, atau Alpa)
+
+		$sql = "INSERT INTO data_absen (
+					id_user,
+					id_bln,
+					id_hri,
+					id_tgl,
+					jam_msk,
+					st_jam_msk,
+					jam_klr,
+					st_jam_klr,
+					absen_lainnya,
+					st_ab_lain) VALUES (
+					?,
+					?,
+					?,
+					?,
+					?,
+					'Dikonfirmasi',
+					'$hour',
+					'Dikonfirmasi',
+					?,
+					'Dikonfirmasi')";
+
+		if ($statement = $conn->prepare($sql)) {
+			$statement->bind_param("iiiiss", $_SESSION['id'], $id_bln, $day, $day_tgl, $hour, $absen_lainnya);
+
+			if ($statement->execute()) {
+				// Absen sukses
+				$conn->close();
+				header("location:../absen&ab=1");
+			} else {
+				header("location:../absen&ab=2");
+			}
+		} else {
+			header("location:../absen&ab=2");
+		}
+	} //Cancel Absen
+	elseif ($_GET['absen'] == 5) {
+		// Pada opsi ini akan menghapus data absen yang telah diinputkan
+		$id_user = mysqli_real_escape_string($conn, $_SESSION['id']);
+		$id_bln = date("m");
+		$day_tgl = date("d");
+		$day = date("N");
+		$hour = date("H.i") . " WIB";
+		$sql = "DELETE FROM data_absen WHERE id_user='$id_user' AND id_tgl='$day_tgl' AND id_bln='$id_bln'";
+
+		if ($statement = $conn->prepare($sql)) {
+			if ($statement->execute()) {
+				// Absen sukses
+				$conn->close();
+				header("location:../absen&ab=1");
+			} else {
+				header("location:../absen&ab=2");
+			}
+		} else {
+			header("location:../absen&ab=2");
+		}
+	}
+
+	//Absen pulang
+	else {
 		// Absensi pulang -> melakukan Update jam pulang
 		$id_user = mysqli_real_escape_string($conn, $_SESSION['id']);
 		$id_bln = date("m");
@@ -167,6 +323,7 @@ elseif (isset($_POST['simpan_note'])) {
 		$id_absen = $_GET['accx_absen'];
 		$type = $_GET['type'];
 		if ($type === "in") {
+			// Kode untuk konfirmasi tipe "in"
 			$query = "UPDATE data_absen SET st_jam_msk=? WHERE id_absen='$id_absen'";
 			if ($statement = $conn->prepare($query)) {
 				$status = "Dikonfirmasi";
@@ -175,18 +332,18 @@ elseif (isset($_POST['simpan_note'])) {
 					$status
 				);
 				if ($statement->execute()) {
-					// sukses update
+					// Sukses update
 					echo "Sukses";
 				} else {
-					//gagal update
+					// Gagal update
 					echo "Gagal";
 				}
 				$conn->close();
 			} else {
 				echo "Ga siap";
 			}
-
-		} else {
+		} elseif ($type === "out") {
+			// Kode untuk konfirmasi tipe "out"
 			$query = "UPDATE data_absen SET st_jam_klr=? WHERE id_absen='$id_absen'";
 			if ($statement = $conn->prepare($query)) {
 				$status = "Dikonfirmasi";
@@ -195,16 +352,18 @@ elseif (isset($_POST['simpan_note'])) {
 					$status
 				);
 				if ($statement->execute()) {
-					// sukses update
+					// Sukses update
 					echo "Sukses";
 				} else {
-					//gagal update
+					// Gagal update
 					echo "Gagal";
 				}
 				$conn->close();
 			} else {
 				echo "Ga siap";
 			}
+		} else {
+			echo "Tipe tidak valid";
 		}
 	}
 }
@@ -340,7 +499,25 @@ elseif (isset($_GET['dec_absen'])) {
 			} else {
 				header("location:../absen&ab=2");
 			}
-
+		} elseif ($type === "in") {
+			$query = "UPDATE data_absen SET st_ab_lain=? WHERE id_absen='$id_absen'";
+			if ($statement = $conn->prepare($query)) {
+				$status = "Ditolak";
+				$statement->bind_param(
+					"s",
+					$status
+				);
+				if ($statement->execute()) {
+					// sukses update
+					header("location:../absen&ab=3");
+				} else {
+					//gagal update
+					header("location:../absen&ab=2");
+				}
+				$conn->close();
+			} else {
+				header("location:../absen&ab=2");
+			}
 		} else {
 			$query = "UPDATE data_absen SET st_jam_klr=? WHERE id_absen='$id_absen'";
 			if ($statement = $conn->prepare($query)) {

@@ -1,12 +1,4 @@
 <?php
-/**
- * 
- *  Absensi Siswa Prakerin
- *  codinger-mini.blogpsot.com
- *  fb.me/rizal.ofdraw
- *  
- */
-
 session_start();
 include './lib/db/dbconfig.php';
 //include './lib/db/functions.php';

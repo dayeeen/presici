@@ -29,7 +29,7 @@
 	                       <tr>
 	                         <th>No</th>
 	                         <th>Hari, Tanggal</th>
-	                         <th>Catatan</th>
+	                         <th>Keterangan</th>
 	                         <th>Status</th>
 	                       </tr>
 	                    </thead>
@@ -79,14 +79,14 @@
 	              
 	              $cek = $query_note->num_rows;
 	              if ($cek!==0) {
-	                echo "<h4 class='sub-header'>Catatan - $month </h4>";
+	                echo "<h4 class='sub-header'>Bulan $month </h4>";
 	                echo "<div class='table-responsive'>
 	                   <table class='table table-striped'>
 	                    <thead>
 	                       <tr>
 	                         <th>No</th>
 	                         <th>Hari, Tanggal</th>
-	                         <th>Catatan</th>
+	                         <th>Keterangan</th>
 	                         <th>Status</th>
 	                       </tr>
 	                    </thead>

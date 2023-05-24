@@ -18,7 +18,7 @@
 							<th>No</th>
 							<th>Nama Siswa</th>
 							<th>Jurusan</th>
-							<th>Aksi</th>
+							<th>Riwayat Absensi</th>
 						</tr>
 					</thead>
 					<tbody>";
