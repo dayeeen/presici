@@ -5,6 +5,7 @@ include '../lib/db/dbconfig.php';
 
 if (isset($_POST['login'])) {
 	$email = mysqli_real_escape_string($conn, $_POST['email']);
+	$nis = mysqli_real_escape_string($conn, $_POST['email']);
 	$pwd = sha1(mysqli_escape_string($conn, $_POST['pwd']));
 
 	$sql = "SELECT * FROM user WHERE email_user='$email' AND pwd_user='$pwd'";
@@ -86,7 +87,6 @@ if (isset($_POST['login'])) {
 		$day_tgl = date("d");
 		$day = date("N");
 		$hour = date("H.i") . " WIB";
-		$status = "Menunggu";
 		$absen_lainnya = "Sakit"; // Ganti dengan nilai yang sesuai (Sakit, Izin, atau Alpa)
 
 		$sql = "INSERT INTO data_absen (
@@ -98,7 +98,8 @@ if (isset($_POST['login'])) {
 					st_jam_msk,
 					jam_klr,
 					st_jam_klr,
-					absen_lainnya) VALUES (
+					absen_lainnya,
+					st_ab_lain) VALUES (
 					?,
 					?,
 					?,
@@ -107,7 +108,8 @@ if (isset($_POST['login'])) {
 					'-',
 					'$hour',
 					'-',
-					?)";
+					?,
+					'Menunggu')";
 
 		if ($statement = $conn->prepare($sql)) {
 			$statement->bind_param("iiiiss", $_SESSION['id'], $id_bln, $day, $day_tgl, $hour, $absen_lainnya);
@@ -129,7 +131,6 @@ if (isset($_POST['login'])) {
 		$day_tgl = date("d");
 		$day = date("N");
 		$hour = date("H.i") . " WIB";
-		$status = "Menunggu";
 		$absen_lainnya = "Izin"; // Ganti dengan nilai yang sesuai (Sakit, Izin, atau Alpa)
 
 		$sql = "INSERT INTO data_absen (
@@ -141,7 +142,8 @@ if (isset($_POST['login'])) {
 					st_jam_msk,
 					jam_klr,
 					st_jam_klr,
-					absen_lainnya) VALUES (
+					absen_lainnya,
+					st_ab_lain) VALUES (
 					?,
 					?,
 					?,
@@ -150,7 +152,8 @@ if (isset($_POST['login'])) {
 					'Dikonfirmasi',
 					'$hour',
 					'Dikonfirmasi',
-					?)";
+					?,
+					'Dikonfirmasi')";
 
 		if ($statement = $conn->prepare($sql)) {
 			$statement->bind_param("iiiiss", $_SESSION['id'], $id_bln, $day, $day_tgl, $hour, $absen_lainnya);
@@ -499,25 +502,6 @@ elseif (isset($_GET['dec_absen'])) {
 			} else {
 				header("location:../absen&ab=2");
 			}
-		} elseif ($type === "in") {
-			$query = "UPDATE data_absen SET st_ab_lain=? WHERE id_absen='$id_absen'";
-			if ($statement = $conn->prepare($query)) {
-				$status = "Ditolak";
-				$statement->bind_param(
-					"s",
-					$status
-				);
-				if ($statement->execute()) {
-					// sukses update
-					header("location:../absen&ab=3");
-				} else {
-					//gagal update
-					header("location:../absen&ab=2");
-				}
-				$conn->close();
-			} else {
-				header("location:../absen&ab=2");
-			}
 		} else {
 			$query = "UPDATE data_absen SET st_jam_klr=? WHERE id_absen='$id_absen'";
 			if ($statement = $conn->prepare($query)) {
@@ -598,30 +582,45 @@ elseif (isset($_POST['dec_absen2'])) {
 }
 // acc Note
 elseif (isset($_GET['acc_note'])) {
-	if (!isset($_SESSION['pb'])) {
-		header("location:home");
-	} else {
-		$id_note = $_GET['acc_note'];
-		$sql = "UPDATE catatan SET status_cat=? WHERE id_cat='$id_note'";
-		if ($statement = $conn->prepare($sql)) {
-			$status = "Dikonfirmasi";
-			$statement->bind_param(
-				"s",
-				$status
-			);
-			if ($statement->execute()) {
-				header("location:../req_catatan&ab=1");
-			} else {
-				//gagal update
-				header("location:../req_catatan&ab=2");
-			}
-			$conn->close();
-		} else {
-			header("location:../req_catatan&ab=2");
-		}
-
-	}
+    if (!isset($_SESSION['pb'])) {
+        header("location:home");
+    } else {
+        $id_note = $_GET['acc_note'];
+        $month = date("m");
+        $day_tgl = date("d");
+        $day = date("N");
+        
+        $sql = "UPDATE catatan SET status_cat=? WHERE id_cat=?";
+        $sql2 = "UPDATE data_absen SET st_ab_lain = 'Dikonfirmasi' WHERE id_hri = ? AND id_bln = ? AND id_tgl = ?";
+        
+        if ($statement = $conn->prepare($sql)) {
+            $status = "Dikonfirmasi";
+            $statement->bind_param("si", $status, $id_note);
+            if ($statement->execute()) {
+                if ($statement2 = $conn->prepare($sql2)) {
+                    $statement2->bind_param("iii", $day, $month, $day_tgl);
+                    if ($statement2->execute()) {
+                        header("location:../req_catatan&ab=1");
+                    } else {
+                        // Failed to execute the second update statement
+                        header("location:../req_catatan&ab=2");
+                    }
+                } else {
+                    // Failed to prepare the second update statement
+                    header("location:../req_catatan&ab=2");
+                }
+            } else {
+                // Failed to execute the first update statement
+                header("location:../req_catatan&ab=2");
+            }
+        } else {
+            // Failed to prepare the first update statement
+            header("location:../req_catatan&ab=2");
+        }
+    }
 }
+
+
 // Decline Note
 elseif (isset($_GET['dec_note'])) {
 	if (!isset($_SESSION['pb'])) {
@@ -673,7 +672,7 @@ elseif (isset($_POST['add_siswa'])) {
 	$sql_detail = "INSERT INTO detail_user (id_user,
 		nis_user,
 		name_user,
-		jurusan_user,
+		kelas_user,
 		jk_user) VALUES(?,
 		?,
 		?,
@@ -733,7 +732,7 @@ elseif (isset($_POST['edit_siswa'])) {
 	$jk = mysqli_real_escape_string($conn, $_POST['jk']);
 	$sklh = mysqli_real_escape_string($conn, $_POST['sklh']);
 
-	$sql_detail = "UPDATE detail_user SET nis_user=?, name_user=?, jurusan_user=?, jk_user=? WHERE id_user='$id'";
+	$sql_detail = "UPDATE detail_user SET nis_user=?, name_user=?, kelas_user=?, jk_user=? WHERE id_user='$id'";
 	if ($nis === "" || $id === "" || $nama === "" || $jk === "" || $sklh === "") {
 		header("location:../siswa&id=$id&st=4");
 	} else {
