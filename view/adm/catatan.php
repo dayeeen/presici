@@ -9,7 +9,7 @@
 			header("location:catatan");
 		}
 	} else {
-		$sql = "SELECT*FROM detail_user ORDER BY jurusan_user ASC";
+		$sql = "SELECT*FROM detail_user ORDER BY kelas_user ASC";
 		if ($conn->query($sql)->num_rows !== 0) {
 			echo "<table class='table table-striped' style='width:50%'>
 					<thead>
@@ -26,7 +26,7 @@
 			while ($get_siswa = $query_siswa->fetch_assoc()) {
 				$id_siswa = $get_siswa['id_user'];
 				$name = $get_siswa['name_user'];
-				$school = $get_siswa['jurusan_user'];
+				$school = $get_siswa['kelas_user'];
 				$no++;
 				echo "<tr>
 							<td>$no</td>
