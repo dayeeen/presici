@@ -35,7 +35,7 @@
 
     <div class="container">
       <form class="form-signin" method="post" action="model/proses.php">
-        <h2 class="form-signin-heading">Please sign in</h2> 
+        <h2 class="form-signin-heading">Harap login</h2> 
         <?php 
             if (isset($_GET['log'])) {
                 if ($_GET['log']==2) {
@@ -43,9 +43,9 @@
                 }
             }
          ?>
-        <label for="inputEmail" class="sr-only">Email address</label>
+        <label for="inputEmail" class="sr-only">Alamat email</label>
         <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="">
-        <label for="inputPassword" class="sr-only">Password</label>
+        <label for="inputPassword" class="sr-only">Kata sandi</label>
         <input type="password" name="pwd" id="inputPassword" class="form-control" placeholder="Password" required="">
     
         <input class="btn btn-lg btn-primary btn-block" type="submit" name="login" value="Sign-in">
