@@ -96,6 +96,8 @@
 			                <th>Status</th>
 			                <th>Jam Keluar</th>
 			                <th>Status</th>
+							<th>Absen Lainnya</th>
+							<th>Status</th>
 			               </tr>
 			            </thead>
 			            <tbody>";
@@ -118,6 +120,8 @@
 			                <td><strong>$st_in</strong></td>
 			                <td>$time_out</td>
 			                <td><strong>$st_out</strong></td>
+							<td>$get_absen[absen_lainnya]</td>
+							<td><strong>$get_absen[st_ab_lain]</strong></td>
 			              </tr>";
 			          }
 			          echo "</table></div>";
