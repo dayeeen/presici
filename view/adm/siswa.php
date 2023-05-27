@@ -41,7 +41,7 @@ if (isset($_GET['st'])) {
         $numofpages = ceil($totalrows / $limit);
         $limitvalue = $page * $limit - ($limit);
 
-        $q = "SELECT*FROM detail_user ORDER BY jurusan_user ASC LIMIT $limitvalue, $limit";
+        $q = "SELECT*FROM detail_user ORDER BY kelas_user ASC LIMIT $limitvalue, $limit";
         //jika user nakal paging lebih dari data yg dimiliki
         $cek_page = $conn->query($q);
         if ($cek_page->num_rows != 0) {
@@ -63,7 +63,7 @@ if (isset($_GET['st'])) {
                     while ($get_siswa = $query_siswa->fetch_assoc()) {
                         $id_siswa = $get_siswa['id_user'];
                         $name = $get_siswa['name_user'];
-                        $school = $get_siswa['jurusan_user'];
+                        $school = $get_siswa['kelas_user'];
                         $no++;
                         echo "<tr>
                                 <td>$no</td>
