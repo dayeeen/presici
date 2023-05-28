@@ -16,7 +16,7 @@
 						<tr>
 							<th>No</th>
 							<th>Nama Siswa</th>
-							<th>Jurusan</th>
+							<th>Kelas</th>
 							<th>Keterangan</th>
 						</tr>
 					</thead>

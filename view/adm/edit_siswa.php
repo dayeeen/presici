@@ -41,10 +41,10 @@ if ($get_sw = $conn->query($sql_sw)->fetch_assoc()) {
       </div>
     </div>
     <div class="form-group">
-      <label class="control-label col-sm-2" for="sekolah">Nama Jurusan:</label>
+      <label class="control-label col-sm-2" for="sekolah">Kelas & Jurusan:</label>
       <div class="col-sm-10">
         <input type="text" value="<?php echo $kelas_user; ?>" class="form-control" name="sklh"
-          placeholder="Masukan Nama Jurusan" required>
+          placeholder="Masukan Kelas & Jurusan" required>
       </div>
     </div>
     <div class="form-group">

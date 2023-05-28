@@ -32,7 +32,6 @@ if (isset($_POST['login'])) {
 	}
 } elseif (isset($_GET['logout'])) {
 	session_destroy();
-
 }
 /**********************************************************/
 //

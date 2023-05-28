@@ -53,7 +53,7 @@ if (isset($_GET['st'])) {
                         <tr>
                             <th>No</th>
                             <th>Nama Siswa</th>
-                            <th>Jurusan</th>
+                            <th>Kelas</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
