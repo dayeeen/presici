@@ -626,21 +626,35 @@ elseif (isset($_GET['dec_note'])) {
 		header("location:../home");
 	} else {
 		$id_note = $_GET['dec_note'];
+		$month = date("m");
+        $day_tgl = date("d");
+        $day = date("N");
+
 		$sql = "UPDATE catatan SET status_cat=? WHERE id_cat='$id_note'";
+		$sql2 = "UPDATE data_absen SET st_ab_lain = 'Ditolak' WHERE id_hri = ? AND id_bln = ? AND id_tgl = ?";
+		
 		if ($statement = $conn->prepare($sql)) {
-			$status = "D";
-			$statement->bind_param(
-				"s",
-				$status
-			);
+			$status = "Ditolak";
+			$statement->bind_param("s", $status);
 			if ($statement->execute()) {
-				header("location:../req_catatan&ab=3");
+				if ($statement2 = $conn->prepare($sql2)) {
+					$statement2->bind_param("iii", $day, $month, $day_tgl);
+					if ($statement2->execute()) {
+						header("location:../req_catatan&ab=1");
+					} else {
+						// Failed to execute the second update statement
+						header("location:../req_catatan&ab=2");
+					}
+				} else {
+					// Failed to prepare the second update statement
+					header("location:../req_catatan&ab=2");
+				}
 			} else {
-				//gagal update
+				// Failed to execute the first update statement
 				header("location:../req_catatan&ab=2");
 			}
-			$conn->close();
 		} else {
+			// Failed to prepare the first update statement
 			header("location:../req_catatan&ab=2");
 		}
 
