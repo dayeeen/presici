@@ -44,19 +44,27 @@ if (isset($_POST['login'])) {
 		$day = date("N");
 		$hour = date("H.i") . " WIB";
 		$status = "Menunggu";
+		if($hour > "07.15"){
+			$status = "Terlambat";
+		}
 		$sql = "INSERT INTO data_absen (
 			id_user,
 			id_bln,
 			id_hri,
 			id_tgl,
 			jam_msk,
-			st_jam_msk) VALUES (
+			st_jam_msk,
+			absen_lainnya,
+			st_ab_lain) 
+			VALUES (
 			?,
 			?,
 			?,
 			?,
 			?,
-			?)";
+			?,
+			'-',
+			'-')";
 		if ($statement = $conn->prepare($sql)) {
 			$statement->bind_param(
 				"iiiiss", $_SESSION['id'],
