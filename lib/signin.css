@@ -1,11 +1,12 @@
 body {
-  padding-top: 80px;
+  padding-top: 180px;
   padding-bottom: 40px;
-  background-color: rgb(255, 255, 255);
+  color: rgb(255, 255, 255);
   background-image: url("./img/wallpaper.jpg");
   background-repeat: no-repeat;
   background-size: cover;
-  background-blend-mode: multiply;
+  background-position: center;
+  background-attachment: fixed;
 }
 
 .form-signin {
@@ -43,4 +44,11 @@ body {
   margin-bottom: 10px;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
+}
+
+@media screen and (max-width: 768px) {
+  body {
+    background-size: calc(100% + 200px);
+    background-image: url("./img/wallpaper2.jpg");
+  }
 }
