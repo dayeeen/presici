@@ -32,7 +32,6 @@
   </head>
 
   <body>
-
     <div class="container">
       <form class="form-signin" method="post" action="model/proses.php">
         <h2 class="form-signin-heading">Login</h2> 
