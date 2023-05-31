@@ -24,7 +24,7 @@ if (isset($_GET['st'])) {
             header("location:siswa");
         }
     } else {
-        $limit = 10;
+        $limit = 25;
         $start = 1;
         $slice = 9;
         $self_server = "./siswa";
@@ -41,14 +41,14 @@ if (isset($_GET['st'])) {
         $numofpages = ceil($totalrows / $limit);
         $limitvalue = $page * $limit - ($limit);
 
-        $q = "SELECT*FROM detail_user ORDER BY kelas_user ASC LIMIT $limitvalue, $limit";
+        $q = "SELECT * FROM detail_user ORDER BY kelas_user ASC, name_user ASC LIMIT $limitvalue, $limit";
         //jika user nakal paging lebih dari data yg dimiliki
         $cek_page = $conn->query($q);
         if ($cek_page->num_rows != 0) {
             if ($r = $conn->query($q)) {
 
                 if ($r->num_rows !== 0) {
-                    echo "<table class='table table-striped' style='width:70%'>
+                    echo "<table class='table table-striped' style='width:100%'>
                     <thead>
                         <tr>
                             <th>No</th>
