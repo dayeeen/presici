@@ -20,6 +20,7 @@
                      <tr>
                       <th>No</th>
                       <th>Nama Siswa</th>
+                      <th>Kelas</th>
                       <th>Hari, Tanggal</th>
                       <th width='40%'>Keterangan</th>
                       <th>Aksi</th>
@@ -31,6 +32,7 @@
             $id_note = $get_note['id_cat'];
             $id_user = $get_note['id_user'];
             $name = $get_note['name_user'];
+            $class = $get_note['kelas_user'];
             $note = nl2br(htmlentities($get_note['isi_cat']));
             $date = "$get_note[nama_hri], $get_note[nama_tgl] $get_note[nama_bln] ".date("Y");
            
@@ -38,6 +40,7 @@
               echo  "<tr>
                   <td>$no</td>
                   <td>$name</td>  
+                  <td>$class</td>
                   <td>$date</td>
                   <td>$note</td>
                   <td>
