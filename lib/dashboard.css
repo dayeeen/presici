@@ -3,17 +3,22 @@
  */
 
 /* Move down content because we have a fixed navbar that is 50px tall */
+
+/* Google Font Link */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+* {
+  font-family: "Poppins", sans-serif;
+}
+
 body {
   padding-top: 50px;
 }
-
 
 /*
  * Global add-ons
  */
 
 .sub-header {
-  padding-bottom: 10px;
   border-bottom: 1px solid #eee;
 }
 
@@ -21,8 +26,13 @@ body {
  * Top navigation
  * Hide default border to remove 1px line.
  */
+
 .navbar-fixed-top {
   border: 0;
+  background: #7d2ae8;
+  color: #fff;
+  font-size: 16px;
+  padding: 2px;
 }
 
 /*
@@ -36,7 +46,7 @@ body {
 @media (min-width: 768px) {
   .sidebar {
     position: fixed;
-    top: 51px;
+    top: 30px;
     bottom: 0;
     left: 0;
     z-index: 1000;
@@ -44,7 +54,7 @@ body {
     padding: 20px;
     overflow-x: hidden;
     overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
-    background-color: #f5f5f5;
+    background: #243447;
     border-right: 1px solid #eee;
   }
 }
@@ -55,17 +65,21 @@ body {
   margin-bottom: 20px;
   margin-left: -20px;
 }
+.nav-sidebar > li > a:hover {
+  background-color: #1e2b3b;
+}
 .nav-sidebar > li > a {
   padding-right: 20px;
   padding-left: 20px;
+  color: rgb(255, 255, 255);
 }
 .nav-sidebar > .active > a,
 .nav-sidebar > .active > a:hover,
 .nav-sidebar > .active > a:focus {
   color: #fff;
-  background-color: #428bca;
+  background: rgb(162, 0, 255);
+  background: linear-gradient(90deg, rgba(162, 0, 255, 1) 0%, rgba(169, 42, 232, 1) 35%, rgba(124, 42, 232, 1) 100%);
 }
-
 
 /*
  * Main content
@@ -83,7 +97,6 @@ body {
 .main .page-header {
   margin-top: 0;
 }
-
 
 /*
  * Placeholder dashboard ideas
@@ -103,17 +116,17 @@ body {
   display: inline-block;
   border-radius: 50%;
 }
-#output{
-font-size:165%;
-font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
-text-align:center;
-#margin-top:13%;
-color:#222222;
+#output {
+  padding: 10px;
+  font-size: 165%;
+  text-align: center;
+  /* margin-top:13%; */
+  color: #fff;
 }
-#output_m{
-font-size:165%;
-font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
-text-align:center;
-#margin-top:13%;
-color:#EEE;
+#output_m {
+  font-size: 165%;
+  text-align: center;
+  /* margin-top:13%; */
+  color: #fff;
 }
+
