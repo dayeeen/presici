@@ -1,60 +1,93 @@
 <!DOCTYPE html>
-<!-- saved from url=(0040)http://getbootstrap.com/examples/signin/ -->
-<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" href="./lib/img/logo.png">
+<!-- Coding by CodingNepal | www.codingnepalweb.com-->
+<html lang="en" dir="ltr">
 
-    <title>Login</title>
+<head>
+  <meta charset="UTF-8">
+  <title> Login and Registration Form in HTML & CSS | CodingLab </title>
+  <!-- Custom styles for this template -->
+  <link href="./lib/login.css" rel="stylesheet">
+  <!-- Fontawesome CDN Link -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Bootstrap core CSS -->
-    <link href="./lib/bootstrap.min.css" rel="stylesheet">
+  <script src="./lib/ie-emulation-modes-warning.js"></script>
 
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <link href="./lib/ie10-viewport-bug-workaround.css" rel="stylesheet">
+</head>
 
-    <!-- Custom styles for this template -->
-    <link href="./lib/signin.css" rel="stylesheet">
-
-    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
-    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
-    <script src="./lib/ie-emulation-modes-warning.js"></script>
-
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-  </head>
-
-  <body>
-    <div class="container">
-      <form class="form-signin" method="post" action="model/proses.php">
-        <h2 class="form-signin-heading">Login</h2> 
-        <?php 
+<body>
+  <div class="container">
+    <input type="checkbox" id="flip">
+    <div class="cover">
+      <div class="front">
+        <img src="./lib/img/wallpaper.jpg" alt="">
+        <div class="text">
+          <span class="text-1">Tidak ada kata terlambat dalam belajar. <br> Namun jika anda sering telat,<br>  maka anda memang kurang ajar!</span>
+          <span class="text-2">Kumaha barudak? Well ah</span>
+        </div>
+      </div>
+      <div class="back">
+        <div class="text">
+          <span class="text-1">Complete miles of journey <br> with one step</span>
+          <span class="text-2">Let's get started</span>
+        </div>
+      </div>
+    </div>
+    <div class="forms">
+      <div class="form-content">
+        <div class="login-form">
+          <div class="title">Login</div>
+          <form class="form-signin" method="post" action="model/proses.php">
+            <?php
             if (isset($_GET['log'])) {
-                if ($_GET['log']==2) {
-                    echo "<div class='alert alert-danger'><strong>Periksa kembali email & katasandi Anda!</strong></div>";
-                }
+              if ($_GET['log'] == 2) {
+                echo "<div class='alert alert-danger'><strong>Periksa kembali email & katasandi Anda!</strong></div>";
+              }
             }
-         ?>
-        <label for="inputEmail" class="sr-only">Alamat email</label>
-        <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email" required="" autofocus="">
-        <label for="inputPassword" class="sr-only">Kata sandi</label>
-        <input type="password" name="pwd" id="inputPassword" class="form-control" placeholder="Kata Sandi" required="">
-    
-        <input class="btn btn-lg btn-primary btn-block" type="submit" name="login" value="Sign-in">
-      </form>
+            ?>
+            <div class="input-boxes">
+              <div class="input-box">
+                <i class="fas fa-envelope"></i>
+                <input type="email" placeholder="Masukkan email anda" name="email" id="inputEmail" required>
+              </div>
+              <div class="input-box">
+                <i class="fas fa-lock"></i>
+                <input type="password" placeholder="Masukkan kata sandi" name="pwd" id="inputPassword" required>
+              </div>
+              <div class="text"><a href="">Lupa katasandi?</a></div>
+              <div class="button input-box">
+                <input type="submit" name="login" value="Login">
+              </div>
+              <div class="text sign-up-text">Akun tidak terdaftar? <label for="flip">Hubungi Admin</label></div>
+            </div>
+          </form>
+        </div>
+        <div class="signup-form">
+          <div class="title">Form Laporan</div>
+          <form action="#">
+            <div class="input-boxes">
+              <div class="input-box">
+                <i class="fas fa-user"></i>
+                <input type="text" placeholder="Masukkan nama anda" required>
+              </div>
+              <div class="input-box">
+                <i class="fas fa-envelope"></i>
+                <input type="email" placeholder="Masukkan email anda" required>
+              </div>
+              <div class="input-box">
+                <i class="fas fa-book"></i>
+                <input type="text" placeholder="Masukkan keluhan anda" required>
+              </div>
+              <div class="button input-box">
+                <input type="submit" value="Kirim">
+              </div>
+              <div class="text sign-up-text">Sudah punya akun? <label for="flip">Login sekarang</label></div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
 
-    </div> <!-- /container -->
-
-
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="./lib/ie10-viewport-bug-workaround.js"></script>
-  
-
-</body></html>
+</html>
