@@ -8,7 +8,7 @@
     <meta name="author" content="">
     <link rel="icon" href="./lib/img/logo.png">
 
-    <title>Absensi SMAN 1 Cibaduyut</title>
+    <title>Presici</title>
 
     <link href="./lib/bootstrap.min.css" rel="stylesheet">
     <link href="./lib/ie10-viewport-bug-workaround.css" rel="stylesheet">
@@ -28,12 +28,12 @@
     setTimeout("waktu()",1000);    
     document.getElementById("output").innerHTML = tanggal.getHours()+":"+tanggal.getMinutes()+" WIB";  
     }
-    window.setTimeout("waktu_m()",1000);    
-    function waktu_m() {     
-    var tanggal = new Date();    
-    setTimeout("waktu_m()",1000);    
-    document.getElementById("output_m").innerHTML = tanggal.getHours()+":"+tanggal.getMinutes()+" WIB";  
-    }   
+    // window.setTimeout("waktu_m()",1000);    
+    // function waktu_m() {     
+    // var tanggal = new Date();    
+    // setTimeout("waktu_m()",1000);    
+    // document.getElementById("output_m").innerHTML = tanggal.getHours()+":"+tanggal.getMinutes()+" WIB";  
+    // }   
 </script>
   </head>
 
