@@ -678,7 +678,7 @@ elseif (isset($_POST['add_siswa'])) {
 	$pwd = mysqli_real_escape_string($conn, sha1($_POST['pwd_cek']));
 	$pwd_cek = mysqli_real_escape_string($conn, sha1($_POST['pwd']));
 
-	$nama = mysqli_real_escape_string($conn, $_POST['nama']);
+	$nama = str_replace(["'"], "'", $_POST['nama']);
 	$jk = mysqli_real_escape_string($conn, $_POST['jk']);
 	$sklh = mysqli_real_escape_string($conn, $_POST['sklh']);
 	$level = "sw";
@@ -749,7 +749,7 @@ elseif (isset($_POST['edit_siswa'])) {
 	$id = mysqli_real_escape_string($conn, $_POST['id_user']);
 	$nis = mysqli_real_escape_string($conn, $_POST['nis']);
 	//$pwd = mysqli_real_escape_string($conn, sha1($_POST['pwd_cek']));
-	$nama = mysqli_real_escape_string($conn, $_POST['nama']);
+	$nama = str_replace(["'"], "'", $_POST['nama']);
 	$jk = mysqli_real_escape_string($conn, $_POST['jk']);
 	$sklh = mysqli_real_escape_string($conn, $_POST['sklh']);
 
