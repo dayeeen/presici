@@ -17,7 +17,6 @@ if (isset($_POST['login'])) {
 
 		extract($ambil);
 
-
 		if ($level_user === 'pb') {
 			$_SESSION['pb'] = $email;
 			$_SESSION['id'] = $id_user;
@@ -37,7 +36,8 @@ if (isset($_POST['login'])) {
 //
 //				Proses untuk User Siswa
 //
-/**********************************************************/elseif (isset($_GET['absen'])) {
+/**********************************************************/
+elseif (isset($_GET['absen'])) {
 	if ($_GET['absen'] == 1) {
 		$month = date("m");
 		$day_tgl = date("d");
