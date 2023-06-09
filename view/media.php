@@ -22,10 +22,10 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
     <script type="text/javascript">
-    window.setTimeout("waktu()",1000);    
+    window.setTimeout("waktu()",0);    
     function waktu() {     
     var tanggal = new Date();    
-    setTimeout("waktu()",1000);    
+    setTimeout("waktu()",0);    
     document.getElementById("output").innerHTML = tanggal.getHours()+":"+tanggal.getMinutes()+" WIB";  
     }
     // window.setTimeout("waktu_m()",1000);    
