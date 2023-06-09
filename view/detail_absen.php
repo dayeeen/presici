@@ -5,12 +5,12 @@
 		$get_user=$query->fetch_assoc();
 		$name = $get_user['name_user'];
 		$id_user = $get_user['id_user'];
-
+		
 		echo "<h1 class='page-header'>Selamat datang, $name</h1>";
 		
 			if ($conn->query("SELECT*FROM data_absen WHERE id_user='$id_user'")->num_rows!==0) {
 				$no=0;
-			 	$query_month=$conn->query("SELECT*FROM bulan ORDER BY id_bln ASC");
+			 	$query_month=$conn->query("SELECT*FROM bulan ORDER BY id_bln DESC");
 			 	while ($get_month=$query_month->fetch_assoc()) {
 			      $month=$get_month['nama_bln'];
 			      $id_month=$get_month['id_bln'];
@@ -78,14 +78,16 @@
 				echo "<div class='alert alert-warning'><strong>Tidak ada Absensi untuk ditampilkan.</strong></div>";
 			}
 	} else {
-	    $id_siswa = mysqli_real_escape_string($conn, $_GET['id_siswa']);
+		$id_siswa = mysqli_real_escape_string($conn, $_GET['id_siswa']);
 		$query = $conn->query("SELECT*FROM detail_user WHERE id_user='$id_siswa'");
 		$get_user=$query->fetch_assoc();
 		$name = $get_user['name_user'];
+		$kelas = $get_user['kelas_user'];
 		$id_user = $get_user['id_user'];
+		echo "<h3 class='page-header'>$name - $kelas</h2>";
 			if ($conn->query("SELECT*FROM data_absen WHERE id_user='$id_user'")->num_rows!==0) {
 				$no=0;
-			 	$query_month=$conn->query("SELECT*FROM bulan ORDER BY id_bln ASC");
+			 	$query_month=$conn->query("SELECT*FROM bulan ORDER BY id_bln DESC");
 			 	while ($get_month=$query_month->fetch_assoc()) {
 			      $month = $get_month['nama_bln'];
 			      $year = date("Y");
@@ -104,7 +106,7 @@
 			      
 			      $cek = $query_absen->num_rows;
 			      if ($cek!==0) {
-			        echo "<h4 class='sub-header'><strong>Absensi:</strong> $name<br><strong>Bulan:</strong> $month $year </h4>";
+			        echo "<h4 class='sub-header'><strong>Bulan:</strong> $month $year </h4>";
 			        echo "<h4 class='sub-header'><strong>Kehadiran:</strong> $hadir, <strong>Izin:</strong> $izin, <strong>Sakit:</strong> $sakit, <strong>Alpa:</strong> $alpa.</h4>";
 			        echo "<div class='table-responsive'>
 			           <table class='table table-striped'>
