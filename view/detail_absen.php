@@ -15,11 +15,21 @@
 			      $month=$get_month['nama_bln'];
 			      $id_month=$get_month['id_bln'];
 			      
+				  $h = $conn->query("SELECT COUNT(id_user) AS jml_hadir FROM data_absen WHERE id_user = $id_user AND (st_jam_msk = 'Dikonfirmasi' OR st_jam_msk = 'Terlambat') AND id_bln = $id_month");
+                  $i = $conn->query("SELECT COUNT(id_user) AS jml_izin FROM data_absen WHERE id_user = $id_user AND absen_lainnya = 'Izin' AND st_ab_lain = 'Dikonfirmasi' AND id_bln = $id_month");
+                  $s = $conn->query("SELECT COUNT(id_user) AS jml_sakit FROM data_absen WHERE id_user = $id_user AND absen_lainnya = 'Sakit' AND st_ab_lain = 'Dikonfirmasi' AND id_bln = $id_month");
+                  $a = $conn->query("SELECT COUNT(id_user) AS jml_alpa FROM data_absen WHERE id_user = $id_user AND (absen_lainnya = 'Alpa' OR st_ab_lain = 'Ditolak') AND id_bln = $id_month");
+                  $hadir = $h->fetch_assoc()['jml_hadir'];
+                  $izin = $i->fetch_assoc()['jml_izin'];
+                  $sakit = $s->fetch_assoc()['jml_sakit'];
+                  $alpa = $a->fetch_assoc()['jml_alpa'];
+
 			      $query_absen=$conn->query("SELECT*FROM data_absen NATURAL LEFT JOIN bulan NATURAL JOIN hari NATURAL JOIN tanggal WHERE id_bln='$id_month' AND id_user='$id_user'");
 			      
 			      $cek = $query_absen->num_rows;
 			      if ($cek!==0) {
 			        echo "<h3 class='sub-header'>Absensiku - $month </h3>";
+			        echo "<h4 class='sub-header'><strong>Kehadiran:</strong> $hadir, <strong>Izin:</strong> $izin, <strong>Sakit:</strong> $sakit, <strong>Alpa:</strong> $alpa.</h4>";
 			        echo "<div class='table-responsive'>
 			           <table class='table table-striped'>
 			            <thead>
@@ -81,11 +91,21 @@
 			      $year = date("Y");
 			      $id_month=$get_month['id_bln'];
 			      
+				  $h = $conn->query("SELECT COUNT(id_user) AS jml_hadir FROM data_absen WHERE id_user = $id_siswa AND (st_jam_msk = 'Dikonfirmasi' OR st_jam_msk = 'Terlambat') AND id_bln = $id_month");
+                  $i = $conn->query("SELECT COUNT(id_user) AS jml_izin FROM data_absen WHERE id_user = $id_siswa AND absen_lainnya = 'Izin' AND st_ab_lain = 'Dikonfirmasi' AND id_bln = $id_month");
+                  $s = $conn->query("SELECT COUNT(id_user) AS jml_sakit FROM data_absen WHERE id_user = $id_siswa AND absen_lainnya = 'Sakit' AND st_ab_lain = 'Dikonfirmasi' AND id_bln = $id_month");
+                  $a = $conn->query("SELECT COUNT(id_user) AS jml_alpa FROM data_absen WHERE id_user = $id_siswa AND (absen_lainnya = 'Alpa' OR st_ab_lain = 'Ditolak') AND id_bln = $id_month");
+                  $hadir = $h->fetch_assoc()['jml_hadir'];
+                  $izin = $i->fetch_assoc()['jml_izin'];
+                  $sakit = $s->fetch_assoc()['jml_sakit'];
+                  $alpa = $a->fetch_assoc()['jml_alpa'];
+
 			      $query_absen=$conn->query("SELECT*FROM data_absen NATURAL LEFT JOIN bulan NATURAL JOIN hari NATURAL JOIN tanggal WHERE id_bln='$id_month' AND id_user='$id_user'");
 			      
 			      $cek = $query_absen->num_rows;
 			      if ($cek!==0) {
 			        echo "<h4 class='sub-header'><strong>Absensi:</strong> $name<br><strong>Bulan:</strong> $month $year </h4>";
+			        echo "<h4 class='sub-header'><strong>Kehadiran:</strong> $hadir, <strong>Izin:</strong> $izin, <strong>Sakit:</strong> $sakit, <strong>Alpa:</strong> $alpa.</h4>";
 			        echo "<div class='table-responsive'>
 			           <table class='table table-striped'>
 			            <thead>
