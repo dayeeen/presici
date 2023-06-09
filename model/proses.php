@@ -44,7 +44,7 @@ elseif (isset($_GET['absen'])) {
 		$day = date("N");
 		$hour = date("H.i") . " WIB";
 		$status = "Menunggu";
-		if($hour > "07.15"){
+		if ($hour > "07.15") {
 			$status = "Terlambat";
 		}
 		$sql = "INSERT INTO data_absen (
@@ -113,7 +113,7 @@ elseif (isset($_GET['absen'])) {
 					?,
 					?,
 					'-',
-					'$hour',
+					'-',
 					'-',
 					?,
 					'Menunggu')";
@@ -157,10 +157,10 @@ elseif (isset($_GET['absen'])) {
 					?,
 					?,
 					'Dikonfirmasi',
-					'$hour',
-					'Dikonfirmasi',
+					'-',
+					'-',
 					?,
-					'Dikonfirmasi')";
+					'Menunggu')";
 
 		if ($statement = $conn->prepare($sql)) {
 			$statement->bind_param("iiiiss", $_SESSION['id'], $id_bln, $day, $day_tgl, $hour, $absen_lainnya);
@@ -183,7 +183,6 @@ elseif (isset($_GET['absen'])) {
 		$day = date("N");
 		$hour = date("H.i") . " WIB";
 		$absen_lainnya = "Alpa"; // Ganti dengan nilai yang sesuai (Sakit, Izin, atau Alpa)
-
 		$sql = "INSERT INTO data_absen (
 					id_user,
 					id_bln,
@@ -200,9 +199,9 @@ elseif (isset($_GET['absen'])) {
 					?,
 					?,
 					?,
-					'Dikonfirmasi',
-					'$hour',
-					'Dikonfirmasi',
+					'-',
+					'-',
+					'-',
 					?,
 					'Dikonfirmasi')";
 
@@ -589,42 +588,42 @@ elseif (isset($_POST['dec_absen2'])) {
 }
 // acc Note
 elseif (isset($_GET['acc_note'])) {
-    if (!isset($_SESSION['pb'])) {
-        header("location:home");
-    } else {
-        $id_note = $_GET['acc_note'];
-        $month = date("m");
-        $day_tgl = date("d");
-        $day = date("N");
-        
-        $sql = "UPDATE catatan SET status_cat=? WHERE id_cat=?";
-        $sql2 = "UPDATE data_absen SET st_ab_lain = 'Dikonfirmasi' WHERE id_hri = ? AND id_bln = ? AND id_tgl = ?";
-        
-        if ($statement = $conn->prepare($sql)) {
-            $status = "Dikonfirmasi";
-            $statement->bind_param("si", $status, $id_note);
-            if ($statement->execute()) {
-                if ($statement2 = $conn->prepare($sql2)) {
-                    $statement2->bind_param("iii", $day, $month, $day_tgl);
-                    if ($statement2->execute()) {
-                        header("location:../req_catatan&ab=1");
-                    } else {
-                        // Failed to execute the second update statement
-                        header("location:../req_catatan&ab=2");
-                    }
-                } else {
-                    // Failed to prepare the second update statement
-                    header("location:../req_catatan&ab=2");
-                }
-            } else {
-                // Failed to execute the first update statement
-                header("location:../req_catatan&ab=2");
-            }
-        } else {
-            // Failed to prepare the first update statement
-            header("location:../req_catatan&ab=2");
-        }
-    }
+	if (!isset($_SESSION['pb'])) {
+		header("location:home");
+	} else {
+		$id_note = $_GET['acc_note'];
+		$month = date("m");
+		$day_tgl = date("d");
+		$day = date("N");
+
+		$sql = "UPDATE catatan SET status_cat=? WHERE id_cat=?";
+		$sql2 = "UPDATE data_absen SET st_ab_lain = 'Dikonfirmasi' WHERE id_hri = ? AND id_bln = ? AND id_tgl = ?";
+
+		if ($statement = $conn->prepare($sql)) {
+			$status = "Dikonfirmasi";
+			$statement->bind_param("si", $status, $id_note);
+			if ($statement->execute()) {
+				if ($statement2 = $conn->prepare($sql2)) {
+					$statement2->bind_param("iii", $day, $month, $day_tgl);
+					if ($statement2->execute()) {
+						header("location:../req_catatan&ab=1");
+					} else {
+						// Failed to execute the second update statement
+						header("location:../req_catatan&ab=2");
+					}
+				} else {
+					// Failed to prepare the second update statement
+					header("location:../req_catatan&ab=2");
+				}
+			} else {
+				// Failed to execute the first update statement
+				header("location:../req_catatan&ab=2");
+			}
+		} else {
+			// Failed to prepare the first update statement
+			header("location:../req_catatan&ab=2");
+		}
+	}
 }
 
 
@@ -635,12 +634,12 @@ elseif (isset($_GET['dec_note'])) {
 	} else {
 		$id_note = $_GET['dec_note'];
 		$month = date("m");
-        $day_tgl = date("d");
-        $day = date("N");
+		$day_tgl = date("d");
+		$day = date("N");
 
 		$sql = "UPDATE catatan SET status_cat=? WHERE id_cat='$id_note'";
 		$sql2 = "UPDATE data_absen SET st_ab_lain = 'Ditolak' WHERE id_hri = ? AND id_bln = ? AND id_tgl = ?";
-		
+
 		if ($statement = $conn->prepare($sql)) {
 			$status = "Ditolak";
 			$statement->bind_param("s", $status);
