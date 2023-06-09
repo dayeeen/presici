@@ -1,14 +1,14 @@
-<h3 class='page-header'>Detail Absensi Siswa SMAN 1 Cibaduyut</h3>
 <div class='table-responsive'>
 	<?php
 	if (isset($_GET['id_siswa'])) {
 		if ($_GET['id_siswa'] !== "") {
-			$id_user = $_GET['id_siswa'];
+			$id_user = $_GET['id_siswa'];            
 			include './view/detail_absen.php';
 		} else {
 			header("location:absensi");
 		}
 	} else {
+        echo "<h3 class='page-header'>Detail Absensi Siswa SMAN 1 Cibaduyut</h3>";
 		$limit = 25;
         $start = 1;
         $slice = 9;
