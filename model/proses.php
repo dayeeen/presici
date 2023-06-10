@@ -156,7 +156,7 @@ elseif (isset($_GET['absen'])) {
 					?,
 					?,
 					?,
-					'Dikonfirmasi',
+					'-',
 					'-',
 					'-',
 					?,
