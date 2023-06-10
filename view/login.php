@@ -4,7 +4,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <title> Login and Registration Form in HTML & CSS | CodingLab </title>
+  <title> Login </title>
   <!-- Custom styles for this template -->
   <link href="./lib/login.css" rel="stylesheet">
   <!-- Fontawesome CDN Link -->
@@ -12,7 +12,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <script src="./lib/ie-emulation-modes-warning.js"></script>
-
+  <link rel="icon" href="./lib/img/logo.png">
 </head>
 
 <body>
