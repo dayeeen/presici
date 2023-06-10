@@ -1,4 +1,30 @@
+<style>
+  .search-form {
+    display: flex;
+    align-items: center;
+  }
+
+  .search-input {
+    width: 30%;
+    margin-right: 10px;
+  }
+
+  .search-button {
+    background: linear-gradient(90deg, rgba(162, 0, 255, 1) 0%, rgba(169, 42, 232, 1) 35%, rgba(124, 42, 232, 1) 100%);
+    color: #fff;
+    border: solid 1px;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+  }
+</style>
 <h3 class='page-header'>Daftar Siswa SMAN 1 Cibaduyut</h3>
+<form class="search-form" role="search" method="POST">
+  <input class="form-control me-2 search-input" type="search" placeholder="Cari NIS atau Nama" aria-label="Search">
+  <button class="btn btn-outline-success search-button" type="submit">Cari</button>
+</form>
+
 <?php
 if (isset($_GET['st'])) {
     if ($_GET['st'] == 1) {
@@ -40,8 +66,14 @@ if (isset($_GET['st'])) {
 
         $numofpages = ceil($totalrows / $limit);
         $limitvalue = $page * $limit - ($limit);
-
-        $q = "SELECT * FROM detail_user ORDER BY kelas_user ASC, name_user ASC LIMIT $limitvalue, $limit";
+        if (isset($_POST['keyword']) && $_POST['keyword'] != null) {
+        	$keyword = $_POST['keyword'];
+        	$q = "SELECT * FROM detail_user WHERE name_user LIKE '%$keyword%' OR nis_user LIKE '%$keyword%' ORDER BY name_user ASC";
+        	$is_search = true;
+        } else {
+        	$q = "SELECT * FROM detail_user ORDER BY kelas_user ASC, name_user ASC LIMIT $limitvalue, $limit";
+        	$is_search = false;
+        }
         //jika user nakal paging lebih dari data yg dimiliki
         $cek_page = $conn->query($q);
         if ($cek_page->num_rows != 0) {
@@ -82,45 +114,47 @@ if (isset($_GET['st'])) {
             } else {
                 echo "<div class='alert alert-danger'><strong>Terjadi kesalahan.</strong></div>";
             }
+            if(!$is_search) {
+            	$sql_cek_row = "SELECT*FROM detail_user";
+	            $q_cek = $conn->query($sql_cek_row);
+	            $hitung = $q_cek->num_rows;
+	            if ($hitung >= $limit) {
+	                echo "<hr><ul class='pagination'>";
+	                if ($page != 1) {
+	                    $pageprev = $page - 1;
+	                    echo '<li><a href="' . $self_server . '&pn=' . $pageprev . '"><<</a></li>';
+	                } else {
+	                    echo "<li><a><<</a></li>";
+	                }
 
-            $sql_cek_row = "SELECT*FROM detail_user";
-            $q_cek = $conn->query($sql_cek_row);
-            $hitung = $q_cek->num_rows;
-            if ($hitung >= $limit) {
-                echo "<hr><ul class='pagination'>";
-                if ($page != 1) {
-                    $pageprev = $page - 1;
-                    echo '<li><a href="' . $self_server . '&pn=' . $pageprev . '"><<</a></li>';
-                } else {
-                    echo "<li><a><<</a></li>";
-                }
+	                if (($page + $slice) < $numofpages) {
+	                    $this_far = $page + $slice;
+	                } else {
+	                    $this_far = $numofpages;
+	                }
 
-                if (($page + $slice) < $numofpages) {
-                    $this_far = $page + $slice;
-                } else {
-                    $this_far = $numofpages;
-                }
+	                if (($start + $page) >= 10 && ($page - 10) > 0) {
+	                    $start = $page - 10;
+	                }
 
-                if (($start + $page) >= 10 && ($page - 10) > 0) {
-                    $start = $page - 10;
-                }
+	                for ($i = $start; $i <= $this_far; $i++) {
+	                    if ($i == $page) {
+	                        echo "<li class='active'><a>" . $i . "</a></li> ";
+	                    } else {
+	                        echo '<li><a href="' . $self_server . '&pn=' . $i . '">' . $i . '</a></li> ';
+	                    }
+	                }
 
-                for ($i = $start; $i <= $this_far; $i++) {
-                    if ($i == $page) {
-                        echo "<li class='active'><a>" . $i . "</a></li> ";
-                    } else {
-                        echo '<li><a href="' . $self_server . '&pn=' . $i . '">' . $i . '</a></li> ';
-                    }
-                }
-
-                if (($totalrows - ($limit * $page)) > 0) {
-                    $pagenext = $page + 1;
-                    echo '<li><a href="' . $self_server . '&pn=' . $pagenext . '">>></a></li>';
-                } else {
-                    echo "<li><li><a>>></a></li>";
-                }
-                echo "</ul>";
+	                if (($totalrows - ($limit * $page)) > 0) {
+	                    $pagenext = $page + 1;
+	                    echo '<li><a href="' . $self_server . '&pn=' . $pagenext . '">>></a></li>';
+	                } else {
+	                    echo "<li><li><a>>></a></li>";
+	                }
+	                echo "</ul>";
+	            }
             }
+            
         } else {
             echo "<div class='alert alert-danger'><strong>Tidak ada data untuk ditampilkan</strong></div>";
         }
