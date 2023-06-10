@@ -1,3 +1,18 @@
+<style>
+    .pagination>.active>a,
+    .pagination>.active>a:hover {
+        border-color: rgb(162, 0, 255);
+        background: linear-gradient(90deg, rgba(162, 0, 255, 1) 0%, rgba(169, 42, 232, 1) 35%, rgba(124, 42, 232, 1) 100%);
+    }
+
+    .pagination>li>a,
+    .pagination>li>a:hover {
+        color: rgb(162, 0, 255);
+    }
+    .aksi>a {
+        color: rgb(162, 0, 255);
+    }
+</style>
 <div class='table-responsive'>
 	<?php
 	if (isset($_GET['id_siswa'])) {
@@ -54,7 +69,7 @@
                                 <td>$no</td>
                                 <td>$name</td>
                                 <td><strong>$school</strong></td>
-                                <td><a href='absensi&id_siswa=$id_siswa' title='Absensi $name'>Lihat Absensi</a></td>
+                                <td class='aksi'><a href='absensi&id_siswa=$id_siswa' title='Absensi $name'>Lihat Absensi</a></td>
                             </tr>";
                     }
                     // $conn->close();
