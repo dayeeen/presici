@@ -5,20 +5,20 @@
 		$get_user=$query->fetch_assoc();
 		$name = $get_user['name_user'];
 		$id_user = $get_user['id_user'];
-		
+
 		echo "<h1 class='page-header'>Selamat datang, $name</h1>";
 		
 			if ($conn->query("SELECT*FROM data_absen WHERE id_user='$id_user'")->num_rows!==0) {
 				$no=0;
-			 	$query_month=$conn->query("SELECT*FROM bulan ORDER BY id_bln DESC");
+			 	$query_month=$conn->query("SELECT*FROM bulan ORDER BY id_bln ASC");
 			 	while ($get_month=$query_month->fetch_assoc()) {
 			      $month=$get_month['nama_bln'];
 			      $id_month=$get_month['id_bln'];
 			      
-				  $h = $conn->query("SELECT COUNT(id_user) AS jml_hadir FROM data_absen WHERE id_user = $id_user AND (st_jam_msk = 'Dikonfirmasi' OR st_jam_msk = 'Terlambat') AND id_bln = $id_month");
+				  $h = $conn->query("SELECT COUNT(id_user) AS jml_hadir FROM data_absen WHERE id_user = $id_user AND (st_jam_msk = 'Dikonfirmasi' OR st_jam_msk = 'Terlambat') AND st_jam_klr = 'Dikonfirmasi' AND id_bln = $id_month");
                   $i = $conn->query("SELECT COUNT(id_user) AS jml_izin FROM data_absen WHERE id_user = $id_user AND absen_lainnya = 'Izin' AND st_ab_lain = 'Dikonfirmasi' AND id_bln = $id_month");
                   $s = $conn->query("SELECT COUNT(id_user) AS jml_sakit FROM data_absen WHERE id_user = $id_user AND absen_lainnya = 'Sakit' AND st_ab_lain = 'Dikonfirmasi' AND id_bln = $id_month");
-                  $a = $conn->query("SELECT COUNT(id_user) AS jml_alpa FROM data_absen WHERE id_user = $id_user AND (absen_lainnya = 'Alpa' OR st_ab_lain = 'Ditolak') AND id_bln = $id_month");
+                  $a = $conn->query("SELECT COUNT(id_user) AS jml_alpa FROM data_absen WHERE id_user = $id_user AND (absen_lainnya = 'Alpa' OR st_jam_msk = 'Ditolak' OR st_jam_klr = 'Ditolak' OR st_ab_lain = 'Ditolak') AND id_bln = $id_month");
                   $hadir = $h->fetch_assoc()['jml_hadir'];
                   $izin = $i->fetch_assoc()['jml_izin'];
                   $sakit = $s->fetch_assoc()['jml_sakit'];
@@ -78,16 +78,14 @@
 				echo "<div class='alert alert-warning'><strong>Tidak ada Absensi untuk ditampilkan.</strong></div>";
 			}
 	} else {
-		$id_siswa = mysqli_real_escape_string($conn, $_GET['id_siswa']);
+	    $id_siswa = mysqli_real_escape_string($conn, $_GET['id_siswa']);
 		$query = $conn->query("SELECT*FROM detail_user WHERE id_user='$id_siswa'");
 		$get_user=$query->fetch_assoc();
 		$name = $get_user['name_user'];
-		$kelas = $get_user['kelas_user'];
 		$id_user = $get_user['id_user'];
-		echo "<h3 class='page-header'>$name - $kelas</h2>";
 			if ($conn->query("SELECT*FROM data_absen WHERE id_user='$id_user'")->num_rows!==0) {
 				$no=0;
-			 	$query_month=$conn->query("SELECT*FROM bulan ORDER BY id_bln DESC");
+			 	$query_month=$conn->query("SELECT*FROM bulan ORDER BY id_bln ASC");
 			 	while ($get_month=$query_month->fetch_assoc()) {
 			      $month = $get_month['nama_bln'];
 			      $year = date("Y");
@@ -106,7 +104,7 @@
 			      
 			      $cek = $query_absen->num_rows;
 			      if ($cek!==0) {
-			        echo "<h4 class='sub-header'><strong>Bulan:</strong> $month $year </h4>";
+			        echo "<h4 class='sub-header'><strong>Absensi:</strong> $name<br><strong>Bulan:</strong> $month $year </h4>";
 			        echo "<h4 class='sub-header'><strong>Kehadiran:</strong> $hadir, <strong>Izin:</strong> $izin, <strong>Sakit:</strong> $sakit, <strong>Alpa:</strong> $alpa.</h4>";
 			        echo "<div class='table-responsive'>
 			           <table class='table table-striped'>
