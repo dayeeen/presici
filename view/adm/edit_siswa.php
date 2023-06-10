@@ -41,7 +41,7 @@ if ($get_sw = $conn->query($sql_sw)->fetch_assoc()) {
       </div>
     </div>
     <div class="form-group">
-      <label class="control-label col-sm-2" for="sekolah">Kelas & Jurusan:</label>
+      <label class="control-label col-sm-2" for="sekolah">Kelas:</label>
       <div class="col-sm-10">
         <input type="text" value="<?php echo $kelas_user; ?>" class="form-control" name="sklh"
           placeholder="Masukan Kelas & Jurusan" required>
@@ -59,24 +59,17 @@ if ($get_sw = $conn->query($sql_sw)->fetch_assoc()) {
       <fieldset>
         <label class="control-label col-sm-2">Katasandi:</label>
         <div class="col-sm-10">
-          <a href="katasandi&id=<?php echo $id_user; ?>">Ubah katasandi</a>
-          <!-- <input type="password" class="form-control" name="pwd" placeholder="Masukan katasandi" id="password" required>
+          <a href="katasandi&id=<?php echo $id_user; ?>" style='color: rgb(162, 0, 255);margin-bottom: 5px;'" >Ubah katasandi</a>
           </div>
-        </div>
-        <div class="form-group">
-          <label class="control-label col-sm-2"></label>
-          <div class="col-sm-10"> 
-      <input type="password" class="form-control" name="pwd_cek" placeholder="Ulangi katasandi"  id="confirm_password" required> -->
-        </div>
-      </fieldset>
-    </div>
-    <div class="form-group">
-      <div class="col-sm-offset-2 col-sm-10">
-        <button type="submit" class="btn btn-default" name="edit_siswa">Simpan</button>
-        <button type="button" onclick="hapusSiswa(<?php echo $id_user; ?>)" class="btn btn-danger" name="">Hapus
-          Siswa</button>
+        </fieldset>
       </div>
-    </div>
+      <div class=" form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+              <button type="submit" class="btn btn-default" name="edit_siswa">Simpan</button>
+              <button type="button" onclick="hapusSiswa(<?php echo $id_user; ?>)" class="btn btn-danger" name="">Hapus
+                Siswa</button>
+            </div>
+        </div>
   </form>
   <?php
 } else {

@@ -51,7 +51,7 @@ if ($get_u = $query->fetch_assoc()) {
     </div>
   </div><!-- /.box-body -->
   <div class="box-footer">
-    <button type="submit" name="change-pwd" class="btn btn-info pull-right">Ubah</button>
+    <button type="submit" name="change-pwd" class="btn btn-info pull-right" style="background-color: rgb(162, 0, 255); border-color: rgb(162, 0, 255);">Ubah</button>
   </div><!-- /.box-footer -->
 </form>
 <?php 
